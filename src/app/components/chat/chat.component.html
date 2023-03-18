@@ -1,17 +1,20 @@
 
 <div class="chat-wrapper">
     <div class="chat-header">
-      <h3>Chat</h3>
+      <h3>{{chatName}}</h3>
     </div>
     <div class="chat-messages">
       <div *ngFor="let message of messages" class="message">
-        <div class="message-user">{{ message.user }}:</div>
-        <div class="message-content">{{ message.content }}</div>
+        <div class="message-user">{{ message.sentTo }}:</div>
+        <div class="message-content">{{ message.body }}</div>
+        <div class="message-content">{{ message.sentAt }}</div>
       </div>
     </div>
     <div class="chat-input">
-      <input [(ngModel)]="newMessage" placeholder="Type your message here..."/>
-      <button (click)="sendMessage()">Send</button>
+      <input [(ngModel)]="newMessage" placeholder="Type your message here..."
+       (keydown.enter)="sendMessage()"
+       (keydown)="onKeydown($event)"> />
+      <button (click)="sendMessage()" >Send</button>
     </div>
 </div>
   

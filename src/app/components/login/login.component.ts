@@ -27,12 +27,13 @@ constructor(
   }
 
   getLogin():void {
+    console.table(this.form.value)
     this.loginService.login(this.form.value)
     .pipe(first())
       .subscribe({
         next: response => {
           this.loginService.setToken(response?.token!);
-          this.router.navigateByUrl('/chat')
+          this.router.navigateByUrl('/home')
         },
         error: error => console.log(error)
       })

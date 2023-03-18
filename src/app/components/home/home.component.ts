@@ -1,38 +1,43 @@
-import { Component } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Router } from '@angular/router';
+import { ChatRoom } from 'src/app/models/models';
+import { ChatsService } from 'src/app/services/chats.service';
 import { SignalService } from 'src/app/services/signal.service';
-
-export interface ChatRoom{
-  id: number,
-  name: string,
-  quantParticipants: number
-}
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit{
 
-  roomName!:string
+  roomName!:string;
+  chatRooms: ChatRoom[] = [];
 
-  constructor(private signalService: SignalService)
-  {
-      this.signalService.getAllGroups();
-  }
+  constructor(
+    private chatService: ChatsService,
+    private router: Router,
+    private signalService: SignalService
+  )
+  {}
   
-  chatRooms:ChatRoom[] = [
-    {id: 10, name:"teste", quantParticipants: 10},
-    {id: 1, name:"Stocks", quantParticipants: 30},
-    {id: 3, name:"cats", quantParticipants: 1}
-  ] 
+  ngOnInit(): void {
+    this.getAllChats()
+  }
 
   createRoom(name:string){
-    this.signalService.createChatRoom(name);
+    this.chatService.createChatRoom({name})
+    .subscribe({
+      error: err => console.error(err)});
+  }
+  
+  getAllChats(){
+    this.chatService.getAllChats()
+    .subscribe(data => this.chatRooms = data);
   }
 
-  getRooms(){
-    console.log(this.signalService.getAllGroups());
+  goToChat(chatName:string){
+    this.signalService.addToGroup(chatName);
+    this.router.navigate(['chat'], {queryParams:{chatName} } )
   }
-
 }

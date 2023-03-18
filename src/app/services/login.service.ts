@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { loginInput } from '../models/loginInput';
+import { Observable } from 'rxjs';
+import { loginInput, UserToken } from '../models/models';
 import { environment } from 'src/environments/environment';
-import { UserToken } from '../models/token';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +21,7 @@ export class LoginService {
     }
 
     login(inputLogin: loginInput) : Observable<UserToken | null>{
+      localStorage.setItem('user', inputLogin.username);
       return this.http.post<UserToken>(`${environment.apiUrl}/auth/login`, inputLogin);
     }
 

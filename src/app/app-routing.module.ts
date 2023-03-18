@@ -4,12 +4,13 @@ import { ChatComponent } from './components/chat/chat.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {path:'', component: LoginComponent},
   {path:'register', component: RegisterComponent},
-  {path: 'home', component: HomeComponent},
-  {path:'chat', component: ChatComponent}
+  {path: 'home', component: HomeComponent, canActivate:[AuthGuard]},
+  {path: 'chat', component: ChatComponent, canActivate:[AuthGuard], data:{ chatName: ''}}
 ];
 
 @NgModule({

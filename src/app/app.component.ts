@@ -9,8 +9,8 @@ import { SignalService } from './services/signal.service';
 export class AppComponent {
   title = 'stocktalk.app';
 
-  constructor(private signalService: SignalService)
+  constructor()
   {
-    this.signalService.startConnection();
+
   }
 }
