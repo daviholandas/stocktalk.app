@@ -5,10 +5,10 @@
             StockTalk
             <h5 class="hint">Use your email to sign in or register now</h5>
         </section>
-        <div class="login-group">
+        <div class="login-group" [formGroup]="form">
             <clr-input-container>
                 <label class="clr-sr-only">Email</label>
-                <input type="email" name="username" clrInput placeholder="Username" formControlName="email"/>
+                <input type="email" name="username" clrInput placeholder="Username" formControlName="username"/>
             </clr-input-container>
             <clr-password-container>
                 <label class="clr-sr-only">Password</label>

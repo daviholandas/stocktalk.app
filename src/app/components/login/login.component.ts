@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { first } from 'rxjs';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -10,19 +13,29 @@ export class LoginComponent implements OnInit {
  form!: FormGroup;
 
 constructor(
-  private formBuilder: FormBuilder)
+  private formBuilder: FormBuilder,
+  private loginService: LoginService,
+  private router: Router)
  {}
  
  
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      email: ['', Validators.required, Validators.email],
+      username: ['', Validators.required, Validators.email],
       password: ['', Validators.required]
     });
   }
 
   getLogin():void {
-    console.log(this.form.controls)
+    this.loginService.login(this.form.value)
+    .pipe(first())
+      .subscribe({
+        next: response => {
+          this.loginService.setToken(response?.token!);
+          this.router.navigateByUrl('/chat')
+        },
+        error: error => console.log(error)
+      })
   }
 
 }

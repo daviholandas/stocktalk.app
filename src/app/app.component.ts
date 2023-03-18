@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SignalService } from './services/signal.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'stocktalk.app';
+
+  constructor(private signalService: SignalService)
+  {
+    this.signalService.startConnection();
+  }
 }

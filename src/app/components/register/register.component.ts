@@ -18,13 +18,13 @@ export class RegisterComponent implements OnInit {
   
    ngOnInit(): void {
      this.form = this.formBuilder.group({
-       email: ['', Validators.required, Validators.email],
+       username: ['', Validators.required, Validators.email],
        password: ['', Validators.required]
      });
    }
 
-   onSubmit(): void{
-    console.log(this.form.value)
+   register(): void{
+    console.log(this.form)
       this.loginService.registerUser(this.form.value)
       .pipe(first())
       .subscribe({

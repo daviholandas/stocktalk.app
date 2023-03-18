@@ -1,0 +1,28 @@
+<div>
+    <clr-datagrid>
+        <clr-dg-column>ID</clr-dg-column>
+        <clr-dg-column>Name</clr-dg-column>
+        <clr-dg-column>Participants</clr-dg-column>
+        <clr-dg-column></clr-dg-column>
+    
+        <clr-dg-row *ngFor="let chatRoom of chatRooms">
+            <clr-dg-cell class="column">{{chatRoom.id}}</clr-dg-cell>
+            <clr-dg-cell class="column">{{chatRoom.name}}</clr-dg-cell>
+            <clr-dg-cell class="column">{{chatRoom.quantParticipants}}</clr-dg-cell>
+            <clr-dg-cell class="column">
+                <button type="button" class="btn btn-success" aria-label="home">
+                    Open
+                </button>
+            </clr-dg-cell>
+        </clr-dg-row>
+    
+        <clr-dg-footer>{{chatRooms.length}} users</clr-dg-footer>
+    </clr-datagrid>
+</div>
+<div>
+    <form clrForm>
+        <input placeholder="My input" name="input" [(ngModel)]="roomName" />
+        <button type="button" class="btn btn-primary" style="margin: 10px;"(click)="createRoom(roomName)">Create one</button >
+        <button type="button" class="btn btn-primary" style="margin: 10px;"(click)="getRooms()">Get</button >
+    </form>
+</div>
