@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import * as singalR from "@microsoft/signalr";
 import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Message } from '../models/models';
+import { Message, MessageStock } from '../models/models';
 import { LoginService } from './login.service';
 
 @Injectable({
@@ -17,8 +17,8 @@ export class SignalService {
   .build();
 
   private messagesSubject = new Subject<Message>();
-  
-  constructor() { 
+
+  constructor() {
     this.token = localStorage.getItem("token") ?? "";
     this.hubConncetion.onclose(async () => await this.startConnection())
     this.listenMessagesChat()
@@ -37,7 +37,7 @@ export class SignalService {
   }
 
   private listenMessagesChat(){
-    this.hubConncetion.on("ReceiveMessage", 
+    this.hubConncetion.on("ReceiveMessage",
     (message) =>{
       this.messagesSubject.next(message)
     })
@@ -49,6 +49,10 @@ export class SignalService {
 
   getChatMessage(){
     return this.messagesSubject.asObservable();
+  }
+
+  callBot(message:MessageStock){
+    this.hubConncetion.invoke("GetStock", message);
   }
 
 }

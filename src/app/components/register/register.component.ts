@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs';
@@ -9,30 +10,41 @@ import { LoginService } from 'src/app/services/login.service';
 })
 export class RegisterComponent implements OnInit {
   form!: FormGroup;
+  isValid = true;
+  erros:string[] = [];
 
- constructor(
+  constructor(
    private formBuilder: FormBuilder,
-   private loginService: LoginService)
+   private loginService: LoginService,
+   private router:Router)
   {}
-  
-  
+
+
    ngOnInit(): void {
      this.form = this.formBuilder.group({
-       username: ['', Validators.required, Validators.email],
+       email: ['', Validators.required, Validators.email],
        password: ['', Validators.required]
      });
    }
 
    register(): void{
-    console.log(this.form)
-      this.loginService.registerUser(this.form.value)
+     if(this.form.invalid){
+      this.erros.push("Something wrong...")
+      this.isValid = false;
+     }
+
+      this.loginService.registerUser(this.form.get('email')?.value,
+      this.form.get('password')?.value)
       .pipe(first())
       .subscribe({
         next: response => {
-          console.log(response);
+          this.router.navigateByUrl('/');
         },
-        error: error => console.log(error)
+        error: response => {
+          this.isValid = false
+          this.erros.push(response.error)
+        }
       });
    }
- 
+
 }

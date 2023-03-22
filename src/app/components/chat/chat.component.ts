@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Message } from 'src/app/models/models';
+import { Message, MessageStock } from 'src/app/models/models';
 import { SignalService } from 'src/app/services/signal.service';
 
 @Component({
@@ -12,14 +12,18 @@ export class ChatComponent implements OnInit {
   chatName:string = 'StockTalk';
   userEmail:string | null = localStorage.getItem("user");
   sentAt = new Date().toString();
+  basic = false;
+  symbol='';
+  messageStock!:MessageStock;
 
   constructor(
     private singalService: SignalService,
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
+    private router:Router
     ){
     }
-  
-  
+
+
   ngOnInit(): void {
     this.activeRoute.queryParams
     .subscribe(
@@ -29,11 +33,11 @@ export class ChatComponent implements OnInit {
   }
 
   messages:Message[] = [];
-  
+
   newMessage!: string;
 
   sendMessage() {
-    
+
     this.singalService.sendMessage(this.chatName, {sentTo: this.userEmail, body: this.newMessage, sentAt:this.sentAt})
     if (this.newMessage) {
       this.newMessage = '';
@@ -44,7 +48,19 @@ export class ChatComponent implements OnInit {
     console.log("chamou")
   }
 
-  onKeydown(event:any){
-    console.log(event)
+  onKeydown(event:KeyboardEvent){
+    if(event.key == '/'){
+      this.basic = true;
+    }
+  }
+
+  backToChats(){
+    this.router.navigateByUrl('/home');
+  }
+
+  searchStocks(){
+    this.messageStock = {symbol: this.symbol, sentTo:this.chatName};
+    this.singalService.callBot(this.messageStock)
+    this.basic = false;
   }
 }

@@ -9,15 +9,15 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class LoginService {
- 
+
   constructor(
     private router: Router,
-    private http: HttpClient) 
+    private http: HttpClient)
     {
     }
-  
-    registerUser(inputLogin: loginInput){
-      return this.http.post(`${environment.apiUrl}/auth/register`, inputLogin);
+
+    registerUser(email:string, password:string){
+      return this.http.post(`${environment.apiUrl}/auth/register`, {email, password});
     }
 
     login(inputLogin: loginInput) : Observable<UserToken | null>{

@@ -14,13 +14,13 @@
                 <label class="clr-sr-only">Password</label>
                 <input type="password" name="password" clrPassword placeholder="Password" formControlName="password"/>
             </clr-password-container>
-            <!---<div class="error active">
+            <div class="error active">
                 Invalid user name or password
-            </div>-->
+            </div>
         </div>
         <div style="display:flex;flex-wrap:wrap;justify-content: center;">
             <button type="submit" class="btn btn-primary" (click)="getLogin()">SignIn</button>
-            <button type="submit" class="btn btn-success-outline">SignUp</button>
+            <button type="submit" class="btn btn-success-outline"(click)="goRegister()">SignUp</button>
         </div>
     </form>
 </div>

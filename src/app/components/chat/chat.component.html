@@ -1,4 +1,4 @@
-
+<button class="btn btn-primary" (click)="backToChats()">Back to chats</button>
 <div class="chat-wrapper">
     <div class="chat-header">
       <h3>{{chatName}}</h3>
@@ -13,8 +13,23 @@
     <div class="chat-input">
       <input [(ngModel)]="newMessage" placeholder="Type your message here..."
        (keydown.enter)="sendMessage()"
-       (keydown)="onKeydown($event)"> />
+       (keydown)="onKeydown($event)">
       <button (click)="sendMessage()" >Send</button>
     </div>
 </div>
-  
+
+<clr-modal [(clrModalOpen)]="basic" [clrModalSize]="'lg'">
+  <h3 class="modal-title">Stockbot</h3>
+  <div class="modal-body">
+    <form clrForm>
+      <clr-input-container>
+        <label>The symbol to search:</label>
+        <input clrInput type="text"  name="symbool"  [(ngModel)]="symbol" />
+      </clr-input-container>
+    </form>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-outline" (click)="basic = false">Cancel</button>
+      <button type="button" class="btn btn-primary" (click)="searchStocks()">Search</button>
+  </div>
+</clr-modal>

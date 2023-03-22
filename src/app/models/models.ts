@@ -24,3 +24,8 @@ export interface ChatRoom{
 export interface CreateChatCommand{
     name:string
 }
+
+export interface MessageStock{
+  symbol:string,
+  sentTo:string
+}

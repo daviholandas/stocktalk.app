@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit{
     private signalService: SignalService
   )
   {}
-  
+
   ngOnInit(): void {
     this.getAllChats()
   }
@@ -28,9 +28,12 @@ export class HomeComponent implements OnInit{
   createRoom(name:string){
     this.chatService.createChatRoom({name})
     .subscribe({
-      error: err => console.error(err)});
+      next: response => {
+        this.router.navigate(['chat'], {queryParams:{chatName:name} })
+      }
+    });
   }
-  
+
   getAllChats(){
     this.chatService.getAllChats()
     .subscribe(data => this.chatRooms = data);

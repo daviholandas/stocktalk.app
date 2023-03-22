@@ -9,7 +9,7 @@ import { LoginService } from 'src/app/services/login.service';
   templateUrl: './login.component.html'
 })
 export class LoginComponent implements OnInit {
- 
+
  form!: FormGroup;
 
 constructor(
@@ -17,8 +17,8 @@ constructor(
   private loginService: LoginService,
   private router: Router)
  {}
- 
- 
+
+
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       username: ['', Validators.required, Validators.email],
@@ -27,7 +27,6 @@ constructor(
   }
 
   getLogin():void {
-    console.table(this.form.value)
     this.loginService.login(this.form.value)
     .pipe(first())
       .subscribe({
@@ -35,8 +34,14 @@ constructor(
           this.loginService.setToken(response?.token!);
           this.router.navigateByUrl('/home')
         },
-        error: error => console.log(error)
+        error: error => {
+          console.log(error)
+        }
       })
+  }
+
+  goRegister(){
+    this.router.navigateByUrl('/register');
   }
 
 }
