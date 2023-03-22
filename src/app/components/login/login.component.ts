@@ -11,6 +11,7 @@ import { LoginService } from 'src/app/services/login.service';
 export class LoginComponent implements OnInit {
 
  form!: FormGroup;
+ isValid = true;
 
 constructor(
   private formBuilder: FormBuilder,
@@ -35,6 +36,7 @@ constructor(
           this.router.navigateByUrl('/home')
         },
         error: error => {
+          this.isValid = false;
           console.log(error)
         }
       })

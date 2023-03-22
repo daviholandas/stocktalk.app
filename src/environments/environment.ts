@@ -1,3 +1,3 @@
 export const environment = {
-    apiUrl: 'http://stocktalkwebapi:8080/'
+    apiUrl: 'http://stocktalkwebapi:7149/'
 };

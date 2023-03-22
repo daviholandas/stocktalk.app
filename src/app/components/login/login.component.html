@@ -14,7 +14,7 @@
                 <label class="clr-sr-only">Password</label>
                 <input type="password" name="password" clrPassword placeholder="Password" formControlName="password"/>
             </clr-password-container>
-            <div class="error active">
+            <div class="error active" *ngIf="!isValid">
                 Invalid user name or password
             </div>
         </div>
