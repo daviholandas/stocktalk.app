@@ -7,23 +7,23 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  
+
   constructor(
     private router: Router,
     private jwHelper: JwtHelperService
   ){}
-  
+
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      let token = localStorage.getItem('token');
+      let token = sessionStorage.getItem('token');
 
       if(!this.jwHelper.isTokenExpired(token)){
         return true;
       }
-       
+      
     this.router.navigate(['/'], {queryParams:{returnUrl: state.url}})
     return false;
   }
-  
+
 }

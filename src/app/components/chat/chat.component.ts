@@ -10,7 +10,7 @@ import { SignalService } from 'src/app/services/signal.service';
 })
 export class ChatComponent implements OnInit {
   chatName:string = 'StockTalk';
-  userEmail:string | null = localStorage.getItem("user");
+  userEmail:string | null = sessionStorage.getItem("user");
   sentAt = new Date().toString();
   basic = false;
   symbol='';
@@ -44,9 +44,6 @@ export class ChatComponent implements OnInit {
     }
   }
 
-  receiveMessage(){
-    console.log("chamou")
-  }
 
   onKeydown(event:KeyboardEvent){
     if(event.key == '/'){

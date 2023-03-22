@@ -21,11 +21,11 @@ export class LoginService {
     }
 
     login(inputLogin: loginInput) : Observable<UserToken | null>{
-      localStorage.setItem('user', inputLogin.username);
+      sessionStorage.setItem('user', inputLogin.username);
       return this.http.post<UserToken>(`${environment.apiUrl}/auth/login`, inputLogin);
     }
 
     setToken(token:string){
-      localStorage.setItem("token", token);
+      sessionStorage.setItem("token", token);
     }
 }
